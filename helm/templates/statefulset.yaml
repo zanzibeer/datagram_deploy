@@ -71,9 +71,9 @@ spec:
             - name: mspace
               mountPath: {{ .Values.datagram.datagramHome }}/mspace
             - name: gitflow
-            mountPath: {{ .Values.datagram.datagramHome }}/gitflow
+              mountPath: {{ .Values.datagram.datagramHome }}/gitflow
             - name: maven-cache
-            mountPath: {{ .Values.datagram.mavenCacheDir }}
+              mountPath: {{ .Values.datagram.mavenCacheDir }}
 
       {{- with .Values.nodeSelector }}
       nodeSelector: {{- toYaml . | nindent 8 }}
