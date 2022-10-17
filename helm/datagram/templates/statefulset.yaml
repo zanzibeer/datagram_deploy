@@ -14,17 +14,17 @@ spec:
     metadata:
       {{- if .Values.podAnnotations }}
         {{- with .Values.podAnnotations }}
-        annotations: {{- toYaml . | nindent 8 }}
-          {{- end }}
-                       checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
-                       checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
-        {{- else }}
-        annotations:
-          checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
-          checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      annotations: {{- toYaml . | nindent 8 }}
         {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      {{- else }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      {{- end }}
 
-        labels: {{- include "datagram.selectorLabels" . | nindent 8 }}
+      labels: {{- include "datagram.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets: {{- toYaml . | nindent 8 }}
@@ -88,36 +88,36 @@ spec:
         - configMap:
             defaultMode: 420
             items:
-              - key: ldap.properties
-                path: ldap.properties
+            - key: ldap.properties
+              path: ldap.properties
             name: {{ include "datagram.fullname" . }}-cm
           name: ldap-properties
         - configMap:
             defaultMode: 420
             items:
-              - key: application.properties
-                path: application.properties
+            - key: application.properties
+              path: application.properties
             name: {{ include "datagram.fullname" . }}-cm
           name: application-properties
     {{- if not .Values.persistence.enabled }}
-    {{- range .Values.persistence.volumes }}
-    - name: {{ .name }}
-      emptyDir: {}
-    {{- end }}
+      {{- range .Values.persistence.volumes }}
+        - name: {{ .name }}
+          emptyDir: {}
+      {{- end }}
     {{- else }}
   volumeClaimTemplates:
-    {{- range .Values.persistence.volumes }}
-    - metadata:
-        name: {{ .name }}
-      spec:
-        accessModes:
-        {{- range .accessModes }}
+      {{- range .Values.persistence.volumes }}
+  - metadata:
+      name: {{ .name }}
+    spec:
+      accessModes:
+      {{- range .accessModes }} 
         - {{ . | quote }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .size }}
-      status:
-        phase: Pending
-        {{- end }}
       {{- end }}
+      resources:
+        requests:
+          storage: {{ .size }}
+    status:
+      phase: Pending
+      {{- end }}
+    {{- end }}
