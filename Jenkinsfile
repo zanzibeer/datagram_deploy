@@ -57,7 +57,7 @@ spec:
                                 usernameVariable: 'USERNAME',
                                 passwordVariable: 'PASSWORD'
                         ]]) {
-                            sh "git clone https://$USERNAME:$PASSWORD@neogit.neoflex.ru/ashohin/k8s-datagram.git"
+                            sh "git clone https://github.com/zanzibeer/jenkins.git"
 //                             dir ("${params.GIT_REPO}") {
 //                                 sh "git checkout ${revision}"
 //                             }
