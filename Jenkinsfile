@@ -58,9 +58,10 @@ spec:
                                 passwordVariable: 'PASSWORD'
                         ]]) {
                             sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/jenkins.git"
-//                             dir ("${params.GIT_REPO}") {
+                            dir ("${params.GIT_REPO}") {
 //                                 sh "git checkout ${revision}"
-//                             }
+                                sh "ls -la"
+                            }
                         }
                     }
                 }
