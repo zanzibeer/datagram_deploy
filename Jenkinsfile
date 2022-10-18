@@ -3,7 +3,7 @@ properties([
                 [
                         stringParam(
                                 name: 'GIT_REPO',
-                                defaultValue: 'k8s-datagram'
+                                defaultValue: 'jenkins'
                         ),
                         stringParam(
                                 name: 'VERSION',
