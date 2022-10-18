@@ -11,7 +11,7 @@ properties([
                         ),
                         choiceParam(
                                 name: 'ENV',
-                                choices: ['datagram']
+                                choices: ['neoflex-datagram']
                         )
                 ]
         )
