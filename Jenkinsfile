@@ -9,10 +9,10 @@ properties([
                                 name: 'APP_VERSION',
                                 defaultValue: '0.1.0'
                         ),
-                        stringParam(
+                        choiceParam(
                                 name: 'IMAGE_TAG',
                                 choices: ['latest', 'redesign-0.1'],
-                                defaultValue: 'latest'
+//                                 defaultValue: 'latest'
                         )
                 ]
         )
