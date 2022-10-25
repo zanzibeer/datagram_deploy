@@ -2,15 +2,15 @@ properties([
         parameters(
                 [
                         stringParam(
-                                name: 'CHART',
+                                name: 'CHART_NAME',
                                 defaultValue: 'datagram'
                         ),
                         stringParam(
-                                name: 'VERSION',
+                                name: 'APP_VERSION',
                                 defaultValue: '0.1.0'
                         ),
                         stringParam(
-                                name: 'TAG',
+                                name: 'IMAGE_TAG',
                                 defaultValue: ''
                         )
                 ]
@@ -49,18 +49,15 @@ spec:
             steps {
                 container('git') {
                     script {
-//                         def revision = params.VERSION.substring(0, 7)
-//                         def revision = 0.1.0
                         withCredentials([[
                                 $class: 'UsernamePasswordMultiBinding',
                                 credentialsId: 'rmusin',
                                 usernameVariable: 'USERNAME',
                                 passwordVariable: 'PASSWORD'
                         ]]) {
-                            sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/${params.CHART}-deploy.git"
-                            dir ("${params.CHART}") {
+                            sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/${params.CHART_NAME}-deploy.git"
+                            dir ("${params.CHART_NAME}-deploy") {
 //                                 sh "git checkout ${revision}"
-//                                 sh "echo ${params.GIT_REPO}"
 //                                 sh "ls -la"
                             }
                         }
@@ -72,14 +69,14 @@ spec:
             steps {
                 container('helm-cli') {
                     script {
-                        dir ("${params.CHART}") {
+                        dir ("${params.CHART_NAME}-deploy") {
                             sh "chmod +x helm/setRevision.sh"
                             sh "chmod +x helm/setImageTags.sh"
-                            sh "./helm/setRevision.sh ${params.VERSION}"
-                            sh "./helm/setImageTags.sh ${params.TAG}"
+                            sh "./helm/setRevision.sh ${params.APP_VERSION}"
+                            sh "./helm/setImageTags.sh ${params.IMAGE_TAG}"
 //                             def registryIp = sh(script: 'getent hosts registry.kube-system | awk \'{ print $1 ; exit }\'', returnStdout: true).trim()
                             sh "helm dependency build helm/datagram"
-                            sh "helm upgrade ${params.CHART} helm/datagram --install --namespace neoflex-${params.CHART} --create-namespace \
+                            sh "helm upgrade ${params.CHART_NAME} helm/datagram --install --namespace neoflex-${params.CHART_NAME} --create-namespace \
                             --set postgresql.auth.password=\"chAngE_Me\""
                         }
                     }
