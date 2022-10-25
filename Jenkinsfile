@@ -55,8 +55,8 @@ spec:
                                 usernameVariable: 'USERNAME',
                                 passwordVariable: 'PASSWORD'
                         ]]) {
-                            sh "git clone https://github.com/zanzibeer/${params.CHART_NAME}-deploy.git"
-                            dir ("${params.CHART_NAME}-deploy") {
+                            sh "git clone https://github.com/zanzibeer/${params.CHART_NAME}_deploy.git"
+                            dir ("${params.CHART_NAME}_deploy") {
 //                                 sh "git checkout ${revision}"
 //                                 sh "ls -la"
                             }
@@ -69,7 +69,7 @@ spec:
             steps {
                 container('helm-cli') {
                     script {
-                        dir ("${params.CHART_NAME}-deploy") {
+                        dir ("${params.CHART_NAME}_deploy") {
                             sh "chmod +x helm/setRevision.sh"
                             sh "chmod +x helm/setImageTags.sh"
                             sh "./helm/setRevision.sh ${params.APP_VERSION}"
