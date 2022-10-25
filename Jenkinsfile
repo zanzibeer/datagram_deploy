@@ -9,6 +9,10 @@ properties([
                                 name: 'VERSION',
                                 defaultValue: '0.1.0'
                         ),
+                        stringParam(
+                                name: 'imageTag',
+                                defaultValue: ''
+                        ),
                         choiceParam(
                                 name: 'ENV',
                                 choices: ['datagram']
