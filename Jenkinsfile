@@ -60,6 +60,7 @@ spec:
                             sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/jenkins.git"
                             dir ("${params.GIT_REPO}") {
 //                                 sh "git checkout ${revision}"
+                                sh "echo ${params.GIT_REPO}"
                                 sh "ls -la"
                             }
                         }
