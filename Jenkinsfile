@@ -77,7 +77,7 @@ spec:
 //                             def registryIp = sh(script: 'getent hosts registry.kube-system | awk \'{ print $1 ; exit }\'', returnStdout: true).trim()
 //                             sh "helm dependency build helm/datagram"
                             sh "helm upgrade ${params.ENV} helm/datagram --install --namespace neoflex-${params.ENV} \
-                            --set postgresql.auth.password="chAngE_Me""
+                            --set postgresql.auth.password=\"chAngE_Me\""
                         }
                     }
                 }
