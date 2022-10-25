@@ -11,7 +11,7 @@ properties([
                         ),
                         stringParam(
                                 name: 'IMAGE_TAG',
-                                choices: ['latest', 'redesign-0.1']
+                                choices: ['latest', 'redesign-0.1'],
                                 defaultValue: 'latest'
                         )
                 ]
