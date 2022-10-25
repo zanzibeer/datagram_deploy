@@ -78,10 +78,12 @@ spec:
                     script {
                         dir ("${params.GIT_REPO}") {
                             sh "chmod +x helm/setRevision.sh"
+                            sh "chmod +x helm/setImageTags.sh"
                             sh "./helm/setRevision.sh ${params.VERSION}"
+                            sh "./helm/setImageTags.sh ${params.TAG}"
 //                             def registryIp = sh(script: 'getent hosts registry.kube-system | awk \'{ print $1 ; exit }\'', returnStdout: true).trim()
                             sh "helm dependency build helm/datagram"
-                            sh "helm upgrade ${params.ENV} helm/datagram --install --namespace neoflex-${params.ENV} --create-namespace \
+                            sh "helm upgrade ${params.CHART} helm/datagram --install --namespace neoflex-${params.CHART} --create-namespace \
                             --set postgresql.auth.password=\"chAngE_Me\""
                         }
                     }
