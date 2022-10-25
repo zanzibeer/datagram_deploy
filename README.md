@@ -161,7 +161,7 @@ helm upgrade --install my-hdfs ./helm/hdfs/charts/hdfs-k8s \
 ```
 
 Подробнее с вариантами установки, переопределяемыми параметрами, а так же с командами для проверки после установки 
-можно ознакомиться в [README.md Helm Chart](./helm/hdfs/charts/README.md).
+можно ознакомиться в [README.md Helm Chart](helm/hdfs/charts/README.md).
 
 ### Удаление
 
@@ -198,7 +198,7 @@ helm uninstall my-airflow --namespace apache-airflow
 Данный Helm Chart устанавливает Neoflex Datagram и PostgreSQL 9.x как вспомогательную БД.
 
 Для начала установки нужно задать имя пользователя (по умолчанию `datagram`), имя базы данных (по умолчанию `datagram`) 
-и пароль в файле [./helm/datagram/values.yaml](./helm/datagram/values.yaml).
+и пароль в файле [./helm/datagram/values.yaml](helm/datagram/values.yaml).
 
 Так же можно просто задать пароль через входящий параметр `postgresql.auth.password`:
 
@@ -305,7 +305,7 @@ helm upgrade --install my-livy ./helm/livy --namespace apache-livy --create-name
 :exclamation: **ВНИМАНИЕ!** Следует обратить внимание, что, т.к. в именах параметров Spark присутствуют точки, то они должны быть 
 заэкранированы, а само имя параметра должно быть взято в кавычки.
 
-[Список всех доступных параметров Helm Chart Livy](./helm/livy/values.yaml)
+[Список всех доступных параметров Helm Chart Livy](helm/livy/values.yaml)
 
 ### Проверка установки
 
@@ -379,7 +379,7 @@ helm uninstall my-livy --namespace apache-livy
 
 Так как для успешной работы **Apache Spark History Server** требуется совместный доступ к логам Spark, то необходимо 
 определить общее место хранения этих логов (в текущей установке это "`hdfs:///shared/spark-logs`") и задать его в параметре `logPath` 
-([список доступных параметров Helm Chart Spark](./helm/spark-history-server/values.yaml)):
+([список доступных параметров Helm Chart Spark](helm/spark-history-server/values.yaml)):
 1. Необходимо определить адрес HDFS NameNode. Внутренний FQDN адрес Pod'а строится по принципу:
 `<имя_pod>.<имя сервиса>.<пространство_имён>.svc.<домен_кластера>`. 
 Например: `my-hdfs-namenode-0.hdfs-namenode.apache-hdfs.svc.cluster.local`.
