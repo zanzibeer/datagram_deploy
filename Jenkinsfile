@@ -55,7 +55,7 @@ spec:
                                 usernameVariable: 'USERNAME',
                                 passwordVariable: 'PASSWORD'
                         ]]) {
-                            sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/${params.CHART_NAME}-deploy.git"
+                            sh "git clone https://github.com/zanzibeer/${params.CHART_NAME}-deploy.git"
                             dir ("${params.CHART_NAME}-deploy") {
 //                                 sh "git checkout ${revision}"
 //                                 sh "ls -la"
