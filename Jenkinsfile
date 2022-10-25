@@ -60,8 +60,8 @@ spec:
                             sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/jenkins.git"
                             dir ("${params.GIT_REPO}") {
 //                                 sh "git checkout ${revision}"
-                                sh "echo ${params.GIT_REPO}"
-                                sh "ls -la"
+//                                 sh "echo ${params.GIT_REPO}"
+//                                 sh "ls -la"
                             }
                         }
                     }
@@ -73,7 +73,7 @@ spec:
                 container('helm-cli') {
                     script {
                         dir ("${params.GIT_REPO}") {
-//                             sh "./helm/setRevision.sh ${params.VERSION}"
+                            sh "./helm/setRevision.sh ${params.VERSION}"
 //                             def registryIp = sh(script: 'getent hosts registry.kube-system | awk \'{ print $1 ; exit }\'', returnStdout: true).trim()
                             sh "helm dependency build helm/datagram"
                             sh "helm upgrade ${params.ENV} helm/datagram --install --namespace neoflex-${params.ENV} --create-namespace \
