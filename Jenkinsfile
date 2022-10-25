@@ -2,8 +2,8 @@ properties([
         parameters(
                 [
                         stringParam(
-                                name: 'GIT_REPO',
-                                defaultValue: 'jenkins'
+                                name: 'CHART',
+                                defaultValue: 'datagram'
                         ),
                         stringParam(
                                 name: 'VERSION',
@@ -12,10 +12,6 @@ properties([
                         stringParam(
                                 name: 'TAG',
                                 defaultValue: ''
-                        ),
-                        choiceParam(
-                                name: 'CHART',
-                                choices: ['datagram']
                         )
                 ]
         )
@@ -61,8 +57,8 @@ spec:
                                 usernameVariable: 'USERNAME',
                                 passwordVariable: 'PASSWORD'
                         ]]) {
-                            sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/jenkins.git"
-                            dir ("${params.GIT_REPO}") {
+                            sh "git clone https://$USERNAME:$PASSWORD@github.com/zanzibeer/${params.CHART}-deploy.git"
+                            dir ("${params.CHART}") {
 //                                 sh "git checkout ${revision}"
 //                                 sh "echo ${params.GIT_REPO}"
 //                                 sh "ls -la"
@@ -76,7 +72,7 @@ spec:
             steps {
                 container('helm-cli') {
                     script {
-                        dir ("${params.GIT_REPO}") {
+                        dir ("${params.CHART}") {
                             sh "chmod +x helm/setRevision.sh"
                             sh "chmod +x helm/setImageTags.sh"
                             sh "./helm/setRevision.sh ${params.VERSION}"
