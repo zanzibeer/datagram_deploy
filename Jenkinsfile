@@ -9,9 +9,9 @@ properties([
                                 name: 'APP_VERSION',
                                 defaultValue: '0.1.0'
                         ),
-                        choiceParam(
+                        stringParam(
                                 name: 'IMAGE_TAG',
-                                choices: ['latest', 'redesign-0.1']
+                                defaultValue: 'latest'
                         )
                 ]
         )
@@ -49,22 +49,12 @@ spec:
             steps {
                 container('git') {
                     script {
-                        withCredentials([[
-                                $class: 'UsernamePasswordMultiBinding',
-                                credentialsId: 'rmusin',
-                                usernameVariable: 'USERNAME',
-                                passwordVariable: 'PASSWORD'
-                        ]]) {
                             sh "git clone https://github.com/zanzibeer/${params.CHART_NAME}_deploy.git"
-                            dir ("${params.CHART_NAME}_deploy") {
-//                                 sh "git checkout ${revision}"
-//                                 sh "ls -la"
-                            }
-                        }
                     }
                 }
             }
         }
+            
         stage('Deploy to env') {
             steps {
                 container('helm-cli') {
@@ -74,7 +64,6 @@ spec:
                             sh "chmod +x helm/setImageTags.sh"
                             sh "./helm/setRevision.sh ${params.APP_VERSION}"
                             sh "./helm/setImageTags.sh ${params.IMAGE_TAG}"
-//                             def registryIp = sh(script: 'getent hosts registry.kube-system | awk \'{ print $1 ; exit }\'', returnStdout: true).trim()
                             sh "helm dependency build helm/datagram"
                             sh "helm upgrade ${params.CHART_NAME} helm/datagram --install --namespace neoflex-${params.CHART_NAME} --create-namespace \
                             --set postgresql.auth.password=\"chAngE_Me\""

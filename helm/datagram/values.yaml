@@ -24,7 +24,7 @@ datagram:
 replicaCount: 1
 
 image:
-  repository: neoflexdatagram/datagram
+  repository: zanzibeer/datagram
   pullPolicy: Always #IfNotPresent (IfNotPresent not working with latest tag)
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
