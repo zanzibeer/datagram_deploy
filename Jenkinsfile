@@ -21,25 +21,7 @@ pipeline {
 
     agent {
         kubernetes {
-            label 'deploy-service-pod'
-            defaultContainer 'jnlp'
-            yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    job: deploy-service
-spec:
-  containers:
-  - name: git
-    image: alpine/git
-    command: ["cat"]
-    tty: true
-  - name: helm-cli
-    image: lachlanevenson/k8s-helm
-    command: ["cat"]
-    tty: true
-"""
+            yamlFile 'builder.yaml'
         }
     }
 
