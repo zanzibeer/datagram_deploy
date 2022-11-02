@@ -28,16 +28,17 @@ pipeline {
     stages {
 
         stage('Checkout') {
-            steps {
-                script {
-                    if APP_VERSION=="" {
-                        sh "echo Enter parameter value: APP_VERSION"
-                        currentBuild.result = 'FAILURE'
-//                       sh "exit"
-                  }
+                    steps {
+                        script {
+                            if (IMAGE_TAG=="" or APP_VERSION=="") {
+                                error("Check entered parameters values: IMAGE_TAG or APP_VERSION")
+                                currentBuild.result = 'ABORTED'
+                            }
+                        }
+                    }
                 }
-              }
-        }
+
+
 
         stage('Find deployment descriptor') {
             steps {
