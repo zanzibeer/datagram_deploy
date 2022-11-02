@@ -31,11 +31,11 @@ pipeline {
             steps {
                 script {
                     if (IMAGE_TAG=="") {
-                        error("Check entered parameters values: IMAGE_TAG or APP_VERSION. They don't be blank!")
+                        error("Check entered parameters values: IMAGE_TAG or APP_VERSION. They must not be empty!")
                         currentBuild.result = 'ABORTED'
                     }
                     if (APP_VERSION=="") {
-                        error("Check entered parameters values: IMAGE_TAG or APP_VERSION. They don't be blank!")
+                        error("Check entered parameters values: IMAGE_TAG or APP_VERSION. They must not be empty!")
                         currentBuild.result = 'ABORTED'
                     }
                 }
