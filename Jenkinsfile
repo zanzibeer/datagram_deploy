@@ -7,11 +7,11 @@ properties([
                         ),
                         stringParam(
                                 name: 'APP_VERSION',
-                                defaultValue: '0.1.0'
+                                defaultValue: ''
                         ),
                         stringParam(
                                 name: 'IMAGE_TAG',
-                                defaultValue: 'latest'
+                                defaultValue: ''
                         )
                 ]
         )
@@ -26,6 +26,17 @@ pipeline {
     }
 
     stages {
+
+        stage('Checkout') {
+            steps {
+                script {
+                    if ( ${params.APP_VERSION}.isEmpty() ) {
+                      sh "echo Enter parameter value: APP_VERSION"
+                      sh "exit"
+                  }
+                }
+              }
+        }
 
         stage('Find deployment descriptor') {
             steps {
