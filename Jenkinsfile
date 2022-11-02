@@ -19,6 +19,11 @@ properties([
 
 pipeline {
 
+    options {
+            ansiColor('xterm')
+            skipDefaultCheckout true
+        }
+
     agent {
         kubernetes {
             yamlFile 'builder.yaml'
@@ -44,7 +49,7 @@ pipeline {
 
 
 
-        stage('Find deployment descriptor') {
+        stage('Clone git repo') {
             steps {
                 container('git') {
                     script {
