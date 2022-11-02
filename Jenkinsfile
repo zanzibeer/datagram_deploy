@@ -30,9 +30,10 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    if ( ${params.APP_VERSION}.isEmpty() ) {
-                      sh "echo Enter parameter value: APP_VERSION"
-                      sh "exit"
+                    if APP_VERSION=="" {
+                        sh "echo Enter parameter value: APP_VERSION"
+                        currentBuild.result = 'FAILURE'
+//                       sh "exit"
                   }
                 }
               }
