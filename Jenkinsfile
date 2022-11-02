@@ -30,7 +30,11 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    if (IMAGE_TAG=="" or APP_VERSION=="") {
+                    if (IMAGE_TAG=="") {
+                        error("Check entered parameters values: IMAGE_TAG or APP_VERSION")
+                        currentBuild.result = 'ABORTED'
+                    }
+                    if (APP_VERSION=="") {
                         error("Check entered parameters values: IMAGE_TAG or APP_VERSION")
                         currentBuild.result = 'ABORTED'
                     }
